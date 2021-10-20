@@ -19,7 +19,7 @@ module.exports = {
   stripeApiKey:
     "pk_test_51H3JftDCORTl8KZUXZjgCEcd1x3y4ZJvcaksWwvYOkblf34wnrBGxfgu75EZb179Aadx4XYgE7gJN62aZ0LqeCJm00U5gQf5eX",
   // conainbase db
-  dbConnectionAirstayz: dbConnection,
+  // dbConnectionAirstayz: dbConnection,
   // coin base
   coinbaseApiKey: process.env.COINBASE_API_KEY || "api_key",
   // coin base

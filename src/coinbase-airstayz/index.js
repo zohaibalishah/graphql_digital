@@ -1,13 +1,23 @@
 const Coinbase = require('../lib/coinbase')
 const config = require('../config')
 const express = require('express')
-
 const knex = require('knex')({
-  client: 'pg',
-  version: '12.3',
-  connection: config.dbConnectionAirstayz,
-  searchPath: ['knex', '$user', 'airstayz_dev', 'public'],
-})
+  client: 'mysql',
+  connection: {
+  host: "database-1.cl8jcz3tpxxa.eu-west-2.rds.amazonaws.com",
+  port: 3306,
+  user: "admin",
+  password: "lolG32327",
+  database: "digitall",
+  }
+});
+// const knex = require('knex')({
+//   client: 'pg',
+//   version: '12.3',
+//   connection: config.dbConnectionAirstayz,
+//   searchPath: ['knex', '$user', 'airstayz_dev', 'public'],
+// })
+
 
 const AirstayzCoinbaseRoute = express.Router()
 
