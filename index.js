@@ -34,7 +34,7 @@ const CheckoutAPI = require("./src/datasources/checkout");
 const cors = require("cors");
 
 const store = createStore();
-const port = 4000;
+const port = 8080;
 const app = express();
 
 const dataSources = () => ({
