@@ -1,0 +1,139 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "graphql-helm.fullname" . }}
+  labels:
+    {{- include "graphql-helm.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "graphql-helm.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "graphql-helm.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "graphql-helm.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          env:
+            - name: COINBASE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: COINBASE_API_KEY
+                  name: graphql
+            - name: WEBHOOK_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: WEBHOOK_SECRET
+                  name: graphql
+            - name: JWK
+              valueFrom:
+                secretKeyRef:
+                  key: JWK
+                  name: graphql
+            - name: MINTING_ACCOUNTS
+              valueFrom:
+                secretKeyRef:
+                  key: MINTING_ACCOUNTS
+                  name: graphql
+            - name: SUM_SUB_APP_TOKEN_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: SUM_SUB_APP_TOKEN_KEY
+                  name: graphql
+            - name: SUM_SUB_APP_TOKEN_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: SUM_SUB_APP_TOKEN_SECRET
+                  name: graphql
+            - name: STRIPE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: STRIPE_API_KEY
+                  name: graphql
+            - name: NODE_ADDR
+              valueFrom:
+                secretKeyRef:
+                  key: NODE_ADDR
+                  name: graphql
+            - name: STRIPE_SIGNING_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: STRIPE_SIGNING_SECRET
+                  name: graphql
+            - name: DB_CONNECTION
+              valueFrom:
+                secretKeyRef:
+                  key: DB_CONNECTION
+                  name: graphql
+            - name: COINBASE_API_KEY_AIRSTAYZ
+              valueFrom:
+                secretKeyRef:
+                  key: COINBASE_API_KEY_AIRSTAYZ
+                  name: graphql
+            - name: WEBHOOK_SECRET_AIRSTAYZ
+              valueFrom:
+                secretKeyRef:
+                  key: WEBHOOK_SECRET_AIRSTAYZ
+                  name: graphql
+            - name: DB_CONNECTION_AIRSTAYZ
+              valueFrom:
+                secretKeyRef:
+                  key: DB_CONNECTION_AIRSTAYZ
+                  name: graphql
+            - name: JWK_AIRSTAYZ
+              valueFrom:
+                secretKeyRef:
+                  key: JWK_AIRSTAYZ
+                  name: graphql
+            - name: SIGNING_ACCOUNT
+              valueFrom:
+                secretKeyRef:
+                  key: SIGNING_ACCOUNT
+                  name: graphql
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.version }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 4000
+              protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - curl
+              - -X POST
+              - '-H ''Content-Type: application/json'''
+              - '-d ''{ "query": "{ referral (id:1) { id } }" }'''
+              - http://localhost:4000/graphql
+          livenessProbe:
+            exec:
+              command:
+              - curl
+              - -X POST
+              - '-H ''Content-Type: application/json'''
+              - '-d ''{ "query": "{ referral (id:1) { id } }" }'''
+              - http://localhost:4000/graphql
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

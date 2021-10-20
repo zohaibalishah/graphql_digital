@@ -1,0 +1,29 @@
+# Environment definitions
+.envrc
+.env
+node_modules
+# Kubeconfig
+kubeconfig_chainstarters-eks-jYfzjJyB
+kubeconfig_comeandgetit-v1
+
+# Local .terraform directories
+**/.terraform/*
+
+# *.tf
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+node_modules
+.DS_Store
+.graphql
+storageclass.yaml
+secret.yaml
+
+# Contracts
+account.json
+
+# Google Cloud SDK Acct Permissions
+*ssh*
