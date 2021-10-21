@@ -13,6 +13,7 @@ module.exports = {
     "sbx:DbAsgDw9y3Tv7Ha2kY2gDyEy.d2bxM4IwQGLP3jp7IFZr2MpioFTeONyw",
   sumSubAppTokenSecret: "302z0DLBZP5mUolwloHVG65dD5VUNOFF",
   nodeAddress: "https://data-seed-prebsc-1-s1.binance.org:8545",
+  // missing
   mintingAccounts: process.env.MINTING_ACCOUNTS || "",
   stripeSigningSecret:
     "sk_test_51H3JftDCORTl8KZUNU2uTmFDDlDjHCgvw9WoaRN8kdtcjHuzyluTBjM4jlk8HfcxnGCbips0iW4XvKgXoz1GEtKC00EzbSuN8b",
